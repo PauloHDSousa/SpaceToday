@@ -12,6 +12,7 @@ import java.util.Map;
 public class APOD extends BaseServices {
 
     Context context;
+    String ServiceURL = "https://api.nasa.gov/planetary/apod?api_key=" + NASA_KEY;
 
     public  APOD(Context _context){
         context = _context;
@@ -20,9 +21,7 @@ public class APOD extends BaseServices {
     public void Get(final JSONCallBack myCallBack)
     {
         //GET
-        String URL_GET = "https://api.nasa.gov/planetary/apod?api_key=" + NASA_KEY;
-
-        Rest.GET_METHOD(context, URL_GET, new VolleyResponseListener() {
+        Rest.GET_METHOD(context, ServiceURL, new VolleyResponseListener() {
             @Override
             public void onError(String message) {
                 System.out.println("Error" + message);
