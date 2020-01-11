@@ -34,12 +34,5 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-       new APOD(this).Get(new JSONCallBack(){
-            @Override
-            public void onSuccess(String success) {
-                // no errors
-                Toast.makeText(MainActivity.this, success, Toast.LENGTH_LONG).show();
-            }
-        });
     }
 }
