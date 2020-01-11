@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,9 +53,7 @@ public class DashboardFragment extends Fragment {
 
     private DashboardViewModel dashboardViewModel;
     private Context context;
-    private RequestQueue requestQueue;
-    private static final String ENDPOINT = "https://api.nasa.gov/planetary/apod?api_key=";
-    private Gson gson;
+    Long date = 0l;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel.class);
@@ -63,19 +62,37 @@ public class DashboardFragment extends Fragment {
         context = root.getContext();
 
         final ImageView ivAPOD = root.findViewById(R.id.ivAPOD);
-        final TextView textView = root.findViewById(R.id.text_dashboard);
-        textView.setText("Eye of the tiger");
+        final CalendarView cv = root.findViewById(R.id.cvDate);
 
-        requestQueue = Volley.newRequestQueue(context);
+        cv.setOnDateChangeListener(new CalendarView.OnDateChangeListener(){
+            public void onSelectedDayChange(CalendarView view, int year, int month, int day) {
+
+                    date = cv.getDate();
+
+                    month++;
+
+                    String sMonth = String.valueOf(month);
+                    String sDay = String.valueOf(day);
+
+                    if(month < 10)
+                        sMonth = "0" + month;
 
 
-        new APOD(context).Get(new JSONCallBack(){
-            @Override
-            public void onSuccess(BaseModel success) {
-                // no errors
-                ApodModel m = (ApodModel)success;
+                    if(day < 10)
+                        sDay  = "0" + day ;
 
-                Picasso.get().load(m.URL).into(ivAPOD);
+                    String date = year+"-"+sMonth+"-"+sDay;
+
+
+                    new APOD(context).Get(date, new JSONCallBack(){
+                        @Override
+                        public void onSuccess(BaseModel success) {
+                            // no errors
+                            ApodModel m = (ApodModel)success;
+
+                            Picasso.get().load(m.URL).into(ivAPOD);
+                        }
+                    });
             }
         });
 

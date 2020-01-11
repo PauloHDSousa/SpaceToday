@@ -17,12 +17,16 @@ public class APOD extends BaseServices {
     String ServiceURL = "https://api.nasa.gov/planetary/apod?api_key=" + NASA_KEY;
     Gson gson = new Gson();
 
-    public  APOD(Context _context){
+    public APOD(Context _context)
+    {
         context = _context;
     }
 
-    public void Get(final JSONCallBack myCallBack)
-    {
+    public void Get( String date, final JSONCallBack myCallBack) {
+
+        if (!date.isEmpty())
+            ServiceURL = ServiceURL + "&date=" + date;
+
         //GET
         Rest.GET_METHOD(context, ServiceURL, new VolleyResponseListener() {
             @Override
@@ -38,10 +42,9 @@ public class APOD extends BaseServices {
         });
     }
 
-    public void PostTodaysImage()
-    {
+    public void PostTodaysImage() {
         //POST
-        String URL_POST=" ";
+        String URL_POST = " ";
         Rest.POST_METHOD(context, URL_POST, getParams(), new VolleyResponseListener() {
             @Override
             public void onError(String message) {
@@ -55,8 +58,7 @@ public class APOD extends BaseServices {
         });
     }
 
-    public Map<String,String> getParams()
-    {
+    public Map<String, String> getParams() {
         Map<String, String> params = new HashMap<String, String>();
         params.put("YOUR_KEY", "VALUE");
         return params;
