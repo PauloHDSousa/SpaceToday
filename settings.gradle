@@ -1,2 +1,2 @@
-include ':app'
+include ':app', ':imageviewpopuphelper-0.1.1'
 rootProject.name='SpaceToday'

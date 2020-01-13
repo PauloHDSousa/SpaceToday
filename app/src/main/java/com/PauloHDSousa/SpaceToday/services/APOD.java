@@ -1,6 +1,7 @@
 package com.PauloHDSousa.SpaceToday.services;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.PauloHDSousa.SpaceToday.rest.JSONCallBack;
 import com.PauloHDSousa.SpaceToday.rest.Rest;
@@ -31,7 +32,7 @@ public class APOD extends BaseServices {
         Rest.GET_METHOD(context, ServiceURL, new VolleyResponseListener() {
             @Override
             public void onError(String message) {
-                System.out.println("Error" + message);
+                Toast.makeText(context,message, Toast.LENGTH_SHORT).show();
             }
 
             @Override

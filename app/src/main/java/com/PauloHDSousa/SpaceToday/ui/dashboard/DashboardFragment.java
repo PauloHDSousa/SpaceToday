@@ -1,13 +1,21 @@
 package com.PauloHDSousa.SpaceToday.ui.dashboard;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,80 +31,156 @@ import com.PauloHDSousa.SpaceToday.rest.JSONCallBack;
 import com.PauloHDSousa.SpaceToday.services.APOD;
 import com.PauloHDSousa.SpaceToday.services.ModelInterface.BaseModel;
 import com.PauloHDSousa.SpaceToday.services.apod.ApodModel;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.annotations.SerializedName;
+import com.PauloHDSousa.SpaceToday.utils.OnSwipeTouchListener;
 import com.squareup.picasso.Picasso;
 
-import java.util.Arrays;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-
-class Post {
-
-    @SerializedName("date")
-    Date dateCreated;
-
-    String copyright;
-    String explanation;
-    String url;
-    String title;
-}
-
 public class DashboardFragment extends Fragment {
 
     private DashboardViewModel dashboardViewModel;
-    private Context context;
-    Long date = 0l;
+    Context context;
+    ImageView imgView, ivAPODHD;
+    Date dt = new Date();
+    TextView tvTitle, tvExplanation,tvDate;
+    ScrollView svContent;
+    Button ibTraduzir, ibClose, ibZoom;
+    String title, explanation;
+    ProgressBar pbLoading;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel.class);
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
-
         context = root.getContext();
 
-        final ImageView ivAPOD = root.findViewById(R.id.ivAPOD);
-        final CalendarView cv = root.findViewById(R.id.cvDate);
+        pbLoading = root.findViewById(R.id.pbLoading);
 
-        cv.setOnDateChangeListener(new CalendarView.OnDateChangeListener(){
-            public void onSelectedDayChange(CalendarView view, int year, int month, int day) {
+        ibTraduzir = root.findViewById(R.id.ibTraduzir);
+        ibClose= root.findViewById(R.id.ibClose);
+        ibZoom = root.findViewById(R.id.ibZoom);
 
-                    date = cv.getDate();
+        imgView = root.findViewById(R.id.ivAPOD);
+        ivAPODHD= root.findViewById(R.id.ivAPODHD);
 
-                    month++;
+        tvTitle =  root.findViewById(R.id.tvTitle);
+        tvExplanation =  root.findViewById(R.id.tvExplanation);
+        tvDate =  root.findViewById(R.id.tvDate);
 
-                    String sMonth = String.valueOf(month);
-                    String sDay = String.valueOf(day);
+        svContent =  root.findViewById(R.id.svContent);
 
-                    if(month < 10)
-                        sMonth = "0" + month;
+        LoadImageOfTheDay("");
 
-
-                    if(day < 10)
-                        sDay  = "0" + day ;
-
-                    String date = year+"-"+sMonth+"-"+sDay;
+        ibTraduzir.setOnClickListener(new View.OnClickListener() {
 
 
-                    new APOD(context).Get(date, new JSONCallBack(){
-                        @Override
-                        public void onSuccess(BaseModel success) {
-                            // no errors
-                            ApodModel m = (ApodModel)success;
+            @Override
+            public void onClick(View view) {
+            String url = "https://translate.google.com.br/?hl=pt-BR&q=" + title + " " + explanation  +"#view=home&op=translate&sl=en&tl=pt";
 
-                            Picasso.get().load(m.URL).into(ivAPOD);
-                        }
-                    });
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(browserIntent);
+            }
+        });
+
+        ibZoom.setOnClickListener(new View.OnClickListener() {
+
+
+            @Override
+            public void onClick(View view) {
+
+            ivAPODHD.animate()
+                .alpha(1f)
+                .setDuration(1000)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        ivAPODHD.setVisibility(View.VISIBLE);
+                        ibClose.setVisibility(View.VISIBLE);
+                    }
+                });
+            }
+        });
+
+        ibClose.setOnClickListener(new View.OnClickListener() {
+
+
+            @Override
+            public void onClick(View view) {
+            ivAPODHD.animate()
+                .alpha(0f)
+                .setDuration(1000)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        ivAPODHD.setVisibility(View.GONE);
+                        ibClose.setVisibility(View.GONE);
+                    }
+                });
+            }
+        });
+
+
+        svContent.setOnTouchListener(new OnSwipeTouchListener(context) {
+
+            public void onSwipeRight() {
+
+                Calendar c = Calendar.getInstance();
+                c.setTime(dt);
+                c.add(Calendar.DATE, -1);
+                dt = c.getTime();
+
+                String sDate = new SimpleDateFormat("yyyy-MM-DD").format(dt);
+
+                LoadImageOfTheDay(sDate);
+            }
+
+            public void onSwipeLeft() {
+                Toast.makeText(context, "left +1", Toast.LENGTH_SHORT).show();
             }
         });
 
         return root;
     }
 
+    void LoadImageOfTheDay(final String filterDate){
+        new APOD(context).Get(filterDate, new JSONCallBack(){
+            @Override
+            public void onSuccess(BaseModel success) {
+
+                ApodModel m = (ApodModel)success;
+
+                int height = (int) getResources().getDimension(R.dimen._300sdp);
+                int width = (int) getResources().getDimension(R.dimen._300sdp);
+
+                Picasso.get().load(m.URL).resize(width, height).centerCrop().placeholder(R.drawable.progress_animation).into(imgView);
+
+
+                title = m.Title;
+                explanation = m.Explanation;
+
+                tvDate.setText(filterDate);
+                tvExplanation.setText(explanation);
+                tvTitle.setText(title);
+
+                svContent.smoothScrollTo(0,0);
+
+                ContenLoaded();
+
+                Picasso.get().load(m.HDURL).into(ivAPODHD);
+            }
+        });
+    }
+
+    void ContenLoaded(){
+
+        pbLoading.setVisibility(View.GONE);
+
+        ibTraduzir.setVisibility(View.VISIBLE);
+        tvTitle.setVisibility(View.VISIBLE);
+        tvExplanation.setVisibility(View.VISIBLE);
+        tvDate.setVisibility(View.VISIBLE);
+
+    }
 }
+

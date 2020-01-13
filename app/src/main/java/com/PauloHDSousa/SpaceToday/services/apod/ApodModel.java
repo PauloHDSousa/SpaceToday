@@ -16,4 +16,9 @@ public class ApodModel implements BaseModel {
     @SerializedName("url")
     public  String URL;
 
+    @SerializedName("title")
+    public  String Title;
+
+    @SerializedName("hdurl")
+    public  String HDURL;
 }
