@@ -15,6 +15,7 @@ import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -89,34 +90,57 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-            ivAPODHD.animate()
-                .alpha(1f)
-                .setDuration(1000)
-                .setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        ivAPODHD.setVisibility(View.VISIBLE);
-                        ibClose.setVisibility(View.VISIBLE);
-                    }
-                });
+                ivAPODHD.animate()
+                    .alpha(1f)
+                    .setDuration(500)
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            ivAPODHD.setVisibility(View.VISIBLE);
+                            ivAPODHD.setImageAlpha(255);
+                        }
+                    });
+
+                ibClose.animate()
+                    .alpha(1f)
+                    .setDuration(500)
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            ibClose.setVisibility(View.VISIBLE);
+                            ibClose.setAlpha(1f);
+                        }
+                    });
             }
         });
 
         ibClose.setOnClickListener(new View.OnClickListener() {
 
-
             @Override
             public void onClick(View view) {
-            ivAPODHD.animate()
-                .alpha(0f)
-                .setDuration(1000)
-                .setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        ivAPODHD.setVisibility(View.GONE);
-                        ibClose.setVisibility(View.GONE);
-                    }
-                });
+
+
+                ibClose.animate()
+                    .alpha(0f)
+                    .setDuration(500)
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            ibClose.setAlpha(0f);
+                            ibClose.setVisibility(View.GONE);
+                        }
+                    });
+
+                ivAPODHD.animate()
+                    .alpha(0f)
+                    .setDuration(500)
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            ivAPODHD.setImageAlpha(0);
+                            ivAPODHD.setVisibility(View.GONE);
+                        }
+                    });
             }
         });
 

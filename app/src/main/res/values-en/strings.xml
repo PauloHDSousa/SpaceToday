@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">Espaço hoje</string>
+    <string name="app_name">Space Today</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="zoom">Zoom</string>
-    <string name="translate">Traduzir</string>
-    <string name="close">Fechar</string>
+    <string name="translate">Translate</string>
+    <string name="close">Close</string>
 </resources>
