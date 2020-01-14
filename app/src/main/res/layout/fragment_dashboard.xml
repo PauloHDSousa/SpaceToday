@@ -61,7 +61,8 @@
                           android:id="@+id/ibTraduzir"
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
-                          android:text="Traduzir" />
+                          android:visibility="gone"
+                          android:text="@string/translate" />
 
                       <Button
                           android:id="@+id/ibZoom"
@@ -89,28 +90,6 @@
           android:layout_height="wrap_content"
           android:layout_centerVertical="true"
           android:layout_centerHorizontal="true"/>
-
-      <Button
-          android:id="@+id/ibClose"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_alignParentTop="true"
-          android:layout_alignParentRight="true"
-          android:layout_marginTop="@dimen/_5sdp"
-          android:layout_marginRight="@dimen/_5sdp"
-          android:alpha="0"
-          android:background="#ffffff"
-          android:text="Fechar"
-          android:visibility="gone" />
-
-      <ImageView
-          android:id="@+id/ivAPODHD"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:adjustViewBounds="true"
-          android:scaleType="centerCrop"
-          android:visibility="gone"
-          android:alpha="0" />
 
   </RelativeLayout>
 

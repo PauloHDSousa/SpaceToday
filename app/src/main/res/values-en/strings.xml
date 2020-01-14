@@ -5,5 +5,7 @@
     <string name="title_notifications">Notifications</string>
     <string name="zoom">Zoom</string>
     <string name="translate">Translate</string>
-    <string name="close">Close</string>
+    <string name="how">How to use</string>
+    <string name="explanation">You can swim by dates by swiping left to go back 1 day or right to advance 1 day</string>
+
 </resources>

@@ -12,21 +12,10 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.PauloHDSousa.SpaceToday.ui.dashboard.DashboardFragment"
-        android:label="Eye of the tiger"
-        tools:layout="@layout/fragment_dashboard" />
-
-    <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.PauloHDSousa.SpaceToday.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
 
-    <fragment
-        android:id="@+id/navigation_dashboard_VRAU"
-        android:name="com.PauloHDSousa.SpaceToday.ui.dashboard.DashboardFragment"
-        android:label="Dash 2"
-        tools:layout="@layout/fragment_dashboard" />
 
 </navigation>

@@ -2,8 +2,11 @@
     <string name="app_name">Espaço hoje</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_notifications">Como funciona</string>
     <string name="zoom">Zoom</string>
     <string name="translate">Traduzir</string>
-    <string name="close">Fechar</string>
+    <string name="how">Como usar</string>
+    <string name="explanation">Você pode nadar pelas datas deslizando para esquerda para voltar 1 dia ou para a direita para avançar 1 dia</string>
+
+
 </resources>

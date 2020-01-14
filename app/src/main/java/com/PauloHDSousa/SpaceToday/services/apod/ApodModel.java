@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
-public class ApodModel implements BaseModel {
+public class ApodModel  implements BaseModel {
 
     @SerializedName("date")
     public Date Date;

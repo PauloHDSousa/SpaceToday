@@ -6,30 +6,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CalendarView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.PauloHDSousa.SpaceToday.MainActivity;
 import com.PauloHDSousa.SpaceToday.R;
 import com.PauloHDSousa.SpaceToday.rest.JSONCallBack;
-import com.PauloHDSousa.SpaceToday.services.APOD;
+import com.PauloHDSousa.SpaceToday.services.apod.APOD;
 import com.PauloHDSousa.SpaceToday.services.ModelInterface.BaseModel;
 import com.PauloHDSousa.SpaceToday.services.apod.ApodModel;
 import com.PauloHDSousa.SpaceToday.utils.OnSwipeTouchListener;
@@ -42,11 +36,11 @@ public class DashboardFragment extends Fragment {
 
     private DashboardViewModel dashboardViewModel;
     Context context;
-    ImageView imgView, ivAPODHD;
+    ImageView imgView;
     Date dt = new Date();
     TextView tvTitle, tvExplanation,tvDate;
     ScrollView svContent;
-    Button ibTraduzir, ibClose, ibZoom;
+    Button ibTraduzir, ibZoom;
     String title, explanation;
     ProgressBar pbLoading;
 
@@ -58,11 +52,9 @@ public class DashboardFragment extends Fragment {
         pbLoading = root.findViewById(R.id.pbLoading);
 
         ibTraduzir = root.findViewById(R.id.ibTraduzir);
-        ibClose= root.findViewById(R.id.ibClose);
         ibZoom = root.findViewById(R.id.ibZoom);
 
         imgView = root.findViewById(R.id.ivAPOD);
-        ivAPODHD= root.findViewById(R.id.ivAPODHD);
 
         tvTitle =  root.findViewById(R.id.tvTitle);
         tvExplanation =  root.findViewById(R.id.tvExplanation);
@@ -81,66 +73,6 @@ public class DashboardFragment extends Fragment {
 
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             startActivity(browserIntent);
-            }
-        });
-
-        ibZoom.setOnClickListener(new View.OnClickListener() {
-
-
-            @Override
-            public void onClick(View view) {
-
-                ivAPODHD.animate()
-                    .alpha(1f)
-                    .setDuration(500)
-                    .setListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            ivAPODHD.setVisibility(View.VISIBLE);
-                            ivAPODHD.setImageAlpha(255);
-                        }
-                    });
-
-                ibClose.animate()
-                    .alpha(1f)
-                    .setDuration(500)
-                    .setListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            ibClose.setVisibility(View.VISIBLE);
-                            ibClose.setAlpha(1f);
-                        }
-                    });
-            }
-        });
-
-        ibClose.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-
-
-                ibClose.animate()
-                    .alpha(0f)
-                    .setDuration(500)
-                    .setListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            ibClose.setAlpha(0f);
-                            ibClose.setVisibility(View.GONE);
-                        }
-                    });
-
-                ivAPODHD.animate()
-                    .alpha(0f)
-                    .setDuration(500)
-                    .setListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            ivAPODHD.setImageAlpha(0);
-                            ivAPODHD.setVisibility(View.GONE);
-                        }
-                    });
             }
         });
 
@@ -191,7 +123,6 @@ public class DashboardFragment extends Fragment {
 
                 ContenLoaded();
 
-                Picasso.get().load(m.HDURL).into(ivAPODHD);
             }
         });
     }
@@ -205,6 +136,14 @@ public class DashboardFragment extends Fragment {
         tvExplanation.setVisibility(View.VISIBLE);
         tvDate.setVisibility(View.VISIBLE);
 
+    }
+
+    String getCurrentDate(){
+        Calendar c = Calendar.getInstance();
+        c.setTime(dt);
+        dt = c.getTime();
+
+        return  new SimpleDateFormat("DD/MM/yyyy").format(dt);
     }
 }
 

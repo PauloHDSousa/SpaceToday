@@ -1,4 +1,4 @@
-package com.PauloHDSousa.SpaceToday.services;
+package com.PauloHDSousa.SpaceToday.services.apod;
 
 import android.content.Context;
 import android.widget.Toast;
@@ -6,6 +6,7 @@ import android.widget.Toast;
 import com.PauloHDSousa.SpaceToday.rest.JSONCallBack;
 import com.PauloHDSousa.SpaceToday.rest.Rest;
 import com.PauloHDSousa.SpaceToday.rest.VolleyResponseListener;
+import com.PauloHDSousa.SpaceToday.services.BaseServices;
 import com.PauloHDSousa.SpaceToday.services.apod.ApodModel;
 import com.google.gson.Gson;
 
@@ -42,27 +43,4 @@ public class APOD extends BaseServices {
             }
         });
     }
-
-    public void PostTodaysImage() {
-        //POST
-        String URL_POST = " ";
-        Rest.POST_METHOD(context, URL_POST, getParams(), new VolleyResponseListener() {
-            @Override
-            public void onError(String message) {
-                System.out.println("Error" + message);
-            }
-
-            @Override
-            public void onResponse(String response) {
-                System.out.println("SUCCESS" + response);
-            }
-        });
-    }
-
-    public Map<String, String> getParams() {
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("YOUR_KEY", "VALUE");
-        return params;
-    }
-
 }
