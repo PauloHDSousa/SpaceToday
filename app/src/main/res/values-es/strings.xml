@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Espacio hoy</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Como funciona</string>
+    <string name="zoom">Zoom</string>
+    <string name="translate">Traducir</string>
+    <string name="how">Cómo usar</string>
+    <string name="explanation">Puede caminar por fechas deslizando hacia la izquierda para retroceder 1 día o hacia la derecha para avanzar 1 día</string>
+    <string name="nasa_title">NASA - Imagen de astronomía del día</string>
+</resources>

@@ -6,7 +6,6 @@
     <string name="zoom">Zoom</string>
     <string name="translate">Traduzir</string>
     <string name="how">Como usar</string>
-    <string name="explanation">Você pode nadar pelas datas deslizando para esquerda para voltar 1 dia ou para a direita para avançar 1 dia</string>
-
-
+    <string name="explanation">Você pode andar pelas datas deslizando para esquerda para voltar 1 dia ou para a direita para avançar 1 dia</string>
+    <string name="nasa_title">NASA - Imagem astronômica do dia</string>
 </resources>

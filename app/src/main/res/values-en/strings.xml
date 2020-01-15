@@ -2,10 +2,11 @@
     <string name="app_name">Space Today</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_notifications">How to use</string>
     <string name="zoom">Zoom</string>
     <string name="translate">Translate</string>
     <string name="how">How to use</string>
-    <string name="explanation">You can swim by dates by swiping left to go back 1 day or right to advance 1 day</string>
+    <string name="explanation">You can navigate by dates by swiping left to go back 1 day or right to go forward 1 day</string>
+    <string name="nasa_title">NASA - Astronomy Picture of the Day</string>
 
 </resources>

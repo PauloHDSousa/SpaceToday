@@ -51,11 +51,12 @@ public class HomeFragment extends Fragment {
     Context context;
     ImageView imgView;
     Date dt = new Date();
-    TextView tvTitle, tvExplanation;
+    TextView tvTitle, tvExplanation, tvNasaTitle;
     ScrollView svContent;
     Button ibTraduzir, ibZoom;
     String title, explanation, fullImageURL;
     ProgressBar pbLoading;
+    String language;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -72,14 +73,14 @@ public class HomeFragment extends Fragment {
 
         tvTitle =  root.findViewById(R.id.tvTitle);
         tvExplanation =  root.findViewById(R.id.tvExplanation);
+        tvNasaTitle =  root.findViewById(R.id.tvNasaTitle);
 
         svContent =  root.findViewById(R.id.svContent);
 
-        String language = Locale.getDefault().getDisplayLanguage();
+        language = Locale.getDefault().getLanguage();
 
-        if(!language.equals("English")){
-            ibTraduzir.setVisibility(View.VISIBLE);
-        }
+
+
         //Initialize date
         Calendar c = Calendar.getInstance();
         c.setTime(dt);
@@ -92,7 +93,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
-                String url = "https://translate.google.com.br/?hl=pt-BR&q=" + title + " " + explanation  +"#view=home&op=translate&sl=en&tl=pt";
+                String url = "https://translate.google.com.br/?hl="+language+"&q=" + title + " " + explanation  +"#view=home&op=translate&sl=en&tl="+language;
 
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 startActivity(browserIntent);
@@ -165,6 +166,11 @@ public class HomeFragment extends Fragment {
         ibZoom.setVisibility(View.VISIBLE);
         tvTitle.setVisibility(View.VISIBLE);
         tvExplanation.setVisibility(View.VISIBLE);
+        tvNasaTitle.setVisibility(View.VISIBLE);
+
+        if(!language.equals("en")){
+            ibTraduzir.setVisibility(View.VISIBLE);
+        }
     }
 
     boolean isToday(){
